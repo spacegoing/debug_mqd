@@ -1,0 +1,19 @@
+#+BEGIN_SRC bash
+docker run --rm -t --net=host --env-file=env-file-mqd-etl docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest  trth_request  --account=hhu --feed=LUX --data-type=endofday --date-from=2017-01-01 --date-to=2017-07-01 --config-dir=/home/config --action=request
+docker run --rm -t --net=host --env-file=env-file-mqd-etl docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest  trth_request  --account=hhu --feed=LUX --data-type=corpactions --date-from=2017-01-01 --date-to=2017-07-01 --config-dir=/home/config --action=request
+docker run --rm -t --net=host --env-file=env-file-mqd-etl docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest  trth_request  --account=hhu --feed=LUX --data-type=trade --date-from=2017-01-01 --date-to=2017-07-01 --config-dir=/home/config --action=request
+docker run -td --net=host --env-file=env-file-mqd-etl --name etldocker docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest
+docker run -td --net=host --env-file=env-file-mqd-etl --entrypoint=/bin/bash --name etl docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest
+localMac: docker run -itd --net=host --env-file=env-file-mqd-etl --entrypoint=/bin/bash --name=etl -v /Users/spacegoing/macCodeLab-MBP2015/MQD/debug_mqd:/projects docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest
+mqdAWS: docker run -itd --net=host --env-file=env-file-mqd-etl --entrypoint=/bin/bash --name=etl -v /home/ubuntu/mqdCodeLab/debug_mqd:/projects docker-registry.aws.cmcrc.com/cmcrc/mqd-etl:latest
+./entrypoint.sh
+#+END_SRC
+
+usr/local/lib/python3.6/dist-packages/cmcrc/metrics/
+metrics_generate_aws --metric=cmcrc.metrics.daily_crash_risk --uptick_market=taiwan^taiwan --date_from=2018-03-31 --date_to=2018-03-31 --reader=uptick_blueshift.reader.BlueshiftS3FeedReader --config_file=/home/config --refdata_reader=refdata.DjangoRefDataReader --refdata-settings-module-name=cmcrc_refdata.refdata_settings_aws
+/home/sge_ve/bin/metrics_generate_aws --metric=cmcrc.metrics.info_leakage --track_types=status --uptick_market=asx^asx --date_from=2018-06-01 --date_to=2018-06-01 --reader=uptick_blueshift.reader.BlueshiftS3FeedReader --config_file=/home/config --refdata_reader=refdata.DjangoRefDataReader --refdata-settings-module-name=cmcrc_refdata.refdata_settings_aws
+python -m pdb -c continue /usr/local/lib/python3.6/dist-packages/workflow_jobs/metrics_generate_aws.py --metric=cmcrc.metrics.info_leakage --track_types=status --uptick_market=asx^asx --date_from=2018-06-01 --date_to=2018-06-01 --reader=uptick_blueshift.reader.BlueshiftS3FeedReader --config_file=/home/config --refdata_reader=refdata.DjangoRefDataReader --refdata-settings-module-name=cmcrc_refdata.refdata_settings_aws
+cd /usr/local/lib/python3.6/dist-packages/workflow_jobs
+ipython --pdb /usr/local/lib/python3.6/dist-packages/workflow_jobs/metrics_generate_aws.py -- --metric=cmcrc.metrics.info_leakage --track_types=status --uptick_market=asx^asx --date_from=2018-06-01 --date_to=2018-06-01 --reader=uptick_blueshift.reader.BlueshiftS3FeedReader --config_file=/home/config --refdata_reader=refdata.DjangoRefDataReader --refdata-settings-module-name=cmcrc_refdata.refdata_settings_aws
+
+/home/sge_ve/bin/metrics_generate_aws --metric=cmcrc.metrics.historical_price --track_types=taq,index --uptick_market=asx^asx --date_from=2018-06-07 --date_to=2018-06-07 --reader=uptick_blueshift.reader.BlueshiftS3FeedReader --config_file=/home/config --refdata_reader=refdata.DjangoRefDataReader --refdata-settings-module-name=cmcrc_refdata.refdata_settings_aws
